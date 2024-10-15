@@ -1,0 +1,39 @@
+---
+title: "fish_nutrition"
+author: "Noam Altman-Kurosaki"
+date: "2024-10-15"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls())
+# install.packages("librarian") # for using the shelf function
+
+# install/load remaining packages
+librarian::shelf(here, tidyverse, ggplot2, ggpubr, vegan, glmmTMB, car, effects, DHARMa, stringr, MuMIn, nlme, mgcv, emmeans, dplyr, knitr, rfishbase)
+
+```
+
+# Read data
+
+```{r read import data}
+# url for the download of MCR fish time series on EDI
+fish_url <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-mcr.6.63&entityid=ac2c7a859ce8595ec1339e8530b9ba50"
+
+# read in via read.csv - should be 105452 observations of 26 variables
+fish_df <- read.csv(file = fish_url)
+
+# read in fisheries data from organized cnh data
+cnh <- read.csv(here::here("data", "annotated_roadside_fish_cnh.csv"), na.strings=c("","NA"), stringsAsFactors = T)
+
+# extract species that were IDed to lowest taxonomic resolution
+target_species <- unique(na.omit(cnh$species))
+
+# extract nutrient data for those fish
+nutrients <- rfishbase::estimate(target_species) %>% select(Species, Calcium:Zinc_u95)
+
+
+
+```
