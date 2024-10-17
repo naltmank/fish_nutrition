@@ -14,6 +14,12 @@ rm(list = ls())
 # install/load remaining packages
 librarian::shelf(here, tidyverse, ggplot2, ggpubr, vegan, glmmTMB, car, effects, DHARMa, stringr, MuMIn, nlme, mgcv, emmeans, dplyr, knitr, rfishbase)
 
+# functions
+
+## Standard error
+se <- function(x){
+  sd(x)/sqrt(n())
+}
 ```
 
 # Read data
@@ -24,6 +30,8 @@ fish_url <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-
 
 # read in via read.csv - should be 105452 observations of 26 variables
 fish_df <- read.csv(file = fish_url)
+fish_df$Site <- as.factor(paste0("lter_", fish_df$Site))
+
 
 # read in fisheries data from organized cnh data
 cnh <- read.csv(here::here("data", "annotated_roadside_fish_cnh.csv"), na.strings=c("","NA"), stringsAsFactors = T)
@@ -35,5 +43,70 @@ target_species <- unique(na.omit(cnh$species))
 nutrients <- rfishbase::estimate(target_species) %>% select(Species, Calcium:Zinc_u95)
 
 
+
+```
+
+
+```{r plot total biomass}
+# condense fish_df to total biomass at transect level
+total_biomass_df <- fish_df %>%
+  dplyr::group_by(Year, Site, Habitat, Transect) %>%
+  summarise(Biomass_total  = sum(Biomass))
+
+# take the means and standard errors of the biomass per year/site/habitat
+mean_biomass_df <- total_biomass_df %>%
+  dplyr::group_by(Year, Habitat) %>%
+  summarise(Biomass_mean  = mean(Biomass_total),
+            Biomass_se  = se(Biomass_total))
+
+(total_biomass_plot <-
+  ggplot() +
+  geom_point(data = mean_biomass_df, aes(x = Year, y = Biomass_mean, colour = Habitat), size = 3,
+             position = position_dodge(0.3)) +
+  geom_errorbar(data = mean_biomass_df, aes(x = Year, ymin = Biomass_mean - Biomass_se,
+                                            ymax = Biomass_mean + Biomass_se, colour = Habitat),
+                width = 0, size = 0.5, position = position_dodge(0.3) )+
+   geom_line(data = mean_biomass_df, aes(x = Year, y = Biomass_mean, colour = Habitat), linewidth = 1) +
+  annotate("segment", x = 2006, xend = 2010, y = 40000, yend = 40000, linewidth = 2, colour = "grey") +
+
+  geom_vline(xintercept = 2010, linetype = 2, colour = "black", size = 1) +
+  geom_vline(xintercept = 2019, linetype = 2, colour = "red", size = 1) +
+
+   labs(y = "Biomass (g) \n",
+        x = "Year") +
+  theme_classic())
+```
+
+```{r plot fished biomass}
+# subset fish_df based on the target fish list
+target_fisheries_df <- fish_df[fish_df$Taxonomy %in% target_species, ]
+
+# condense to total biomass at transect level
+total_fisheries_biomass <- target_fisheries_df %>%
+  dplyr::group_by(Year, Site, Habitat, Transect) %>%
+  summarise(Biomass_total  = sum(Biomass))
+
+# take the means and standard errors of the biomass per year/site/habitat
+mean_fisheries_biomass_df <- total_fisheries_biomass %>%
+  dplyr::group_by(Year, Habitat) %>%
+  summarise(Biomass_mean  = mean(Biomass_total),
+            Biomass_se  = se(Biomass_total))
+
+(fisheries_biomass_plot <-
+  ggplot() +
+  geom_point(data = mean_fisheries_biomass_df, aes(x = Year, y = Biomass_mean, colour = Habitat), size = 3,
+             position = position_dodge(0.3)) +
+  geom_errorbar(data = mean_fisheries_biomass_df, aes(x = Year, ymin = Biomass_mean - Biomass_se,
+                                            ymax = Biomass_mean + Biomass_se, colour = Habitat),
+                width = 0, size = 0.5, position = position_dodge(0.3) )+
+   geom_line(data = mean_fisheries_biomass_df, aes(x = Year, y = Biomass_mean, colour = Habitat), linewidth = 1) +
+  annotate("segment", x = 2006, xend = 2010, y = 12000, yend = 12000, linewidth = 2, colour = "grey") +
+
+  geom_vline(xintercept = 2010, linetype = 2, colour = "black", size = 1) +
+  geom_vline(xintercept = 2019, linetype = 2, colour = "red", size = 1) +
+
+   labs(y = "Biomass (g) \n",
+        x = "Year") +
+  theme_classic())
 
 ```
