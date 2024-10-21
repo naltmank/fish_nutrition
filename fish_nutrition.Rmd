@@ -73,7 +73,7 @@ mean_biomass_df <- total_biomass_df %>%
   geom_vline(xintercept = 2019, linetype = 2, colour = "red", size = 1) +
 
    labs(y = "Biomass (g) \n",
-        x = "Year") +
+        x = "Year", title = "a. All fish biomass") +
   theme_classic())
 ```
 
@@ -101,12 +101,17 @@ mean_fisheries_biomass_df <- total_fisheries_biomass %>%
                 width = 0, size = 0.5, position = position_dodge(0.3) )+
    geom_line(data = mean_fisheries_biomass_df, aes(x = Year, y = Biomass_mean, colour = Habitat), linewidth = 1) +
   annotate("segment", x = 2006, xend = 2010, y = 12000, yend = 12000, linewidth = 2, colour = "grey") +
-
   geom_vline(xintercept = 2010, linetype = 2, colour = "black", size = 1) +
   geom_vline(xintercept = 2019, linetype = 2, colour = "red", size = 1) +
 
    labs(y = "Biomass (g) \n",
-        x = "Year") +
+        x = "Year", title = "b. Target fish biomass") +
   theme_classic())
 
+```
+
+```{r panel graph, fig.height = 5, fig.width = 10}
+(biomass_panel <-
+  ggpubr::ggarrange(total_biomass_plot, fisheries_biomass_plot, common.legend = T, legend = "bottom"))
+# ggsave(filename = "output/biomass_panel_v1.png", biomass_panel, height = 5, width = 10)
 ```
