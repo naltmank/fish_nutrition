@@ -360,7 +360,7 @@ bleaching_emm <- bleaching_emm %>%
 ```{r biomass panel v2, fig.height = 10, fig.width=13}
 (model_panel <-
   ggpubr::ggarrange(fisheries_biomass_plot, ggarrange(cyclone_biomass, bleaching_biomass, nrow = 1, ncol = 2, legend = "none"), ncol = 1, nrow = 2, common.legend = T, legend = "bottom", heights = c(0.45, 0.55)))
-# ggsave(filename = "output/biomass_panel_v2.png", biomass_panel, height = 10, width = 13)
+# ggsave(filename = "output/biomass_panel_v3.png", model_panel, height = 10, width = 13)
 ```
 
 
