@@ -920,7 +920,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Protein_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 1000, label = "tau == 0.99"), size = 8, parse = T, hjust = 1) +
    labs(y = "Protein (mg) \n",
-        x = "Biomass", title = "a. Protein") +
+        x = "Biomass (g)", title = "a. Protein") +
    theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -941,7 +941,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Omega3_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 6, label = "tau == 0.96"), size = 8, parse = T, hjust = 1) +
    labs(y = "Omega 3 (mg) \n",
-        x = "Biomass", title = "b. Omega 3") +
+        x = "Biomass (g)", title = "b. Omega 3") +
   theme_classic()  +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -962,7 +962,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Calcium_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 3000, label = "tau == 0.90"), size = 8, parse = T, hjust = 1) +
    labs(y = "Calcium (mg) \n",
-        x = "Biomass", title = "c. Calcium") +
+        x = "Biomass (g)", title = "c. Calcium") +
   theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -983,7 +983,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Iron_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 50, label = "tau == 0.83"), size = 8, parse = T, hjust = 1) +
    labs(y = "Iron (mg) \n",
-        x = "Biomass", title = "d. Iron") +
+        x = "Biomass (g)", title = "d. Iron") +
   theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -1004,7 +1004,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = VitaminA_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 2000, label = "tau == 0.83"), size = 8, parse = T, hjust = 1) +
    labs(y = "Vitamin A (mg) \n",
-        x = "Biomass", title = "e. Vitamin A") +
+        x = "Biomass (g)", title = "e. Vitamin A") +
   theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -1025,7 +1025,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Selenium_total, colour = Coast), size = 3) +
     geom_text(aes(x = 115000, y = 1000, label = "tau == 0.88"), size = 8, parse = T, hjust = 1) +
    labs(y = "Selenium (mg) \n",
-        x = "Biomass", title = "f. Selenium") +
+        x = "Biomass (g)", title = "f. Selenium") +
   theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
@@ -1046,7 +1046,7 @@ for(i in 1:length(nutrient_cols)){ # for each nutrient column
   geom_point(data = nutrients_and_biomass, aes(x = Biomass_total, y = Zinc_total, colour = Coast), size = 3) +
   geom_text(aes(x = 115000, y = 100, label = "tau == 0.75"), size = 8, parse = T, hjust = 1) +
    labs(y = "Protein (mg) \n",
-        x = "Biomass", title = "g. Zinc") +
+        x = "Biomass (g)", title = "g. Zinc") +
   theme_classic() +
    theme(plot.title = element_text(size = 22),
         panel.background = element_blank(), 
